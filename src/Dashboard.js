@@ -3,20 +3,20 @@ import axios from 'axios';
 
 
 function Dashboard () {
-    const[tokenDB, setTokenDB] = useState("");
+    const[load, setLoad] = useState(false);
     
     useEffect(()=>{
 
         async function fetchData(){
 
-            const api = 'https://dummyjson.com/docs/auth/user'; 
             const token = localStorage.getItem('token');
-            console.log(token);
-            await axios.get(api , 
+            await axios.get('https://dummyjson.com/auth/users' , 
                         { headers: {"Authorization" : `Bearer ${token}`,  'Content-Type': 'application/json'}
                     })
             .then((res) => {
-                console.log(res.data);
+                if (res.status == 200)
+                    setLoad(true);
+                console.log(res);
             }).catch(
                 (error) => {
                 console.log(error);
@@ -26,6 +26,9 @@ function Dashboard () {
         fetchData();
     }, [])
 
-    return (<h2>Dashboard</h2>);
+    if(load)
+        return (<h2>Dashboard</h2>);
+    else
+        return (<h2>authentication problem</h2>)
 }
 export default Dashboard;

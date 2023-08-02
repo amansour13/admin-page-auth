@@ -13,10 +13,7 @@ function Login() {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [tokenDB, setTokenDB] = useState("");
-    // const history = useHistory();
-    // const [res, setRes] = useState("");
-    // const [load, setLoad] = useState(false);
+
 
     function handleSubmit(event) {
         event.preventDefault();
@@ -45,6 +42,7 @@ function Login() {
                 console.log(typeof(response.data.token));
             })
             .catch(() => {
+                localStorage.setItem("token", "")
                 alert('Error :(');
             });
         }
